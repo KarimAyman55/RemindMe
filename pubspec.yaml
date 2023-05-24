@@ -1,0 +1,83 @@
+name: remindme
+description: A grad project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  smooth_page_indicator: ^1.0.0+2
+  shared_preferences: ^2.0.18
+  dio: ^5.0.1
+  sqflite: ^2.2.4+1
+  intl: ^0.17.0
+  fluttertoast: ^8.0.9
+  flutter_countdown_timer: ^4.1.0
+  hexcolor: ^3.0.1
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
+  url_launcher: ^6.1.10
+  flutter_launcher_icons: ^0.12.0
+  flip_card: ^0.7.0
+  geolocator: ^9.0.2
+  curved_navigation_bar: ^1.0.3
+  geocoding: ^2.0.5
+  get: ^4.6.5
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  modal_progress_hud_nsn : ^0.3.0
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
+  cloud_firestore: ^4.7.1
+  image_picker: ^0.8.7+5
+  firebase_storage: ^11.2.1
+  splash_screen_view : ^2.0.0
+
+
+
+
+
+
+
+
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  carousel_slider: ^4.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  hive_generator: ^2.0.0
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/Logo.png"
+
+flutter:
+
+  assets :
+    - assets/images/
+
+  fonts:
+    - family: Janna
+      fonts:
+        - asset: assets/Fonts/jannah.ttf
+    - family: IconBroken
+      fonts:
+        - asset: assets/Fonts/icons.ttf
+
+
+  uses-material-design: true
+
