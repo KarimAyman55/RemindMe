@@ -26,7 +26,9 @@
 // ),),
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:remindme/Shared/Network/Remote/SharedPre/Shared_Pre.dart';
 import 'package:remindme/Shared/Split/Components.dart';
+import 'package:remindme/Shared/Split/Constants/Constants.dart';
 import 'package:remindme/Shared/Styles/Icons.dart';
 
 import '../../Module/Home/NavigationBar/Navigation_Screen.dart';
@@ -51,7 +53,10 @@ class TestState extends State<Test> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: (){
-            pushAndFinish(context, const LoginScreen());
+            if (patient == true ) {
+              pushTo(context, const LoginScreen());
+              CacheHelper.saveData('patient', true);
+            }
           },icon: const Icon(IconBroken.arrowLeft_3),
         ),
       ),

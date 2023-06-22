@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:remindme/Module/RegisterPage/cubit/RegisterCubit.dart';
-import 'package:remindme/Module/RegisterPage/cubit/RegisterStates.dart';
-import 'package:remindme/Shared/Split/Constants/Constants.dart';
 import 'package:remindme/Shared/Styles/Icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Module/LoginPage/LoginScreen.dart';
@@ -57,19 +52,19 @@ class Setting extends StatelessWidget {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     children:   [
-                                       if (model!.img != "" )
                                        CircleAvatar(
                                          radius: 45,
-                                         backgroundImage: NetworkImage(model.img),
+                                         backgroundImage:AppCubit.get(context).image != null ? FileImage(AppCubit.get(context).image)
+                                             : NetworkImage(model!.img) as ImageProvider
                                        ),
                                       const SizedBox(width: 20,),
-                                      Text("${model.name}",style: Theme.of(context).textTheme.titleMedium),
+                                      Text("${model!.name}",style: Theme.of(context).textTheme.titleMedium),
                                       const SizedBox(width: 20,),
                                       IconButton(
                                           onPressed: (){
                                             AppCubit.get(context).getImg();
                                           },
-                                          icon: const Icon(Icons.camera_alt_outlined)),
+                                          icon: const Icon(Icons.camera_alt_outlined,color: Colors.purple,size: 29,)),
 
                                     ],
                                   ),
@@ -200,7 +195,7 @@ class Setting extends StatelessWidget {
                                   onPressed: (){
 
                                       CacheHelper.removeData("id").then((value) {
-                                      if(value) {
+                                      if(value == true ) {
                                         pushAndFinish(
                                             context, const LoginScreen());
                                       }
