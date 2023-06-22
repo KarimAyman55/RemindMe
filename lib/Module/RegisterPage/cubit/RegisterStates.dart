@@ -21,3 +21,14 @@ class RegisterAuthFailState extends MainRegisterStates{
    RegisterAuthFailState(this.error);
 
 }
+class LoadGetUsersStates extends MainRegisterStates{}
+class SuccessGetUsersStates extends MainRegisterStates{}
+
+class SuccessMessageStates extends MainRegisterStates{}
+class ErrorMessageStates extends MainRegisterStates{
+   String error;
+   ErrorMessageStates(this.error);
+}
+class SuccessGetMessageStates extends MainRegisterStates{}
+class LoadGetMessageStates extends MainRegisterStates{
+   }

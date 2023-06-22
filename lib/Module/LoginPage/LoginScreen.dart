@@ -44,15 +44,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Fluttertoast.showToast(
                     msg: "Login Success ", backgroundColor: Colors.green);
               }
+
               else if (relative == false ){
                 Fluttertoast.showToast(
-                    msg: "please select status first ", backgroundColor: Colors.green);
+                    msg: "please select status first ", backgroundColor: Colors.red);
 
               }
             }}); }
       }
       if(state is ErrorLoginStates ){
-        Fluttertoast.showToast(msg:"Email or Password Wrong",backgroundColor: Colors.amber);
+        Fluttertoast.showToast(msg:"E-mail or Password wrong",backgroundColor: Colors.amber);
 
       }
 

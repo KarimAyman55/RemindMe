@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:remindme/Model/ChatModel/ChatModel.dart';
 import '../../../Model/RegisterModel/RegisterModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
@@ -76,5 +77,74 @@ class RegisterCubit extends Cubit<MainRegisterStates>{
     })   ;
   }
 
+  List <RegisterUserModel> users =[];
+
+  void getAllUsers (){
+    users =[];
+    emit(LoadGetUsersStates());
+
+    FirebaseFirestore.instance.collection("userRegister").get().then((value) => {
+      value.docs.forEach((element) {
+    if (element.data()['uid'] != id) {
+      users.add(RegisterUserModel.fromJson((element.data())));
+    }
+      emit(SuccessGetUsersStates());
+      })
+    });
+
+
+  }
+
+
+  ChatModel? chatModel;
+  void sendMessage ({
+  String ? rId,
+  String ? date,
+  String ? text,
+  }
+      ){
+    ChatModel model = ChatModel(
+      rId: rId,
+      text: text??"",
+      date: date,
+      sId: id,
+    );
+    FirebaseFirestore.instance.collection("userRegister").doc(id).collection("chats").doc(rId)
+        .collection("messages").add(model.mapUser()).then((value) {
+          value.collection("messages").orderBy("date");
+          emit(SuccessMessageStates());
+    }).catchError((e){
+      emit(ErrorMessageStates(e));
+    });
+
+    FirebaseFirestore.instance.collection("userRegister").doc(model.rId).collection("chats").doc(id)
+        .collection("messages").add(model.mapUser()).then((value) {
+
+      emit(SuccessMessageStates());
+    }).catchError((e){
+      emit(ErrorMessageStates(e));
+    });
+
+
+  }
+
+  List <ChatModel> messages =[];
+
+  void getMessages ({
+  String ?rId ,
+}){
+    emit(LoadGetMessageStates());
+    FirebaseFirestore.instance.collection("userRegister").doc(id).collection("chats").doc(rId)
+        .collection("messages").orderBy("dateTime").snapshots().listen((event) {
+      messages =[];
+      event.docs.forEach((element) {
+        messages.add(ChatModel.fromJson(element.data()) );
+
+      });
+      emit(SuccessGetMessageStates());
+
+    });
+
+  }
 
 }

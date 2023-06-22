@@ -8,7 +8,6 @@ class ErrorLoginStates extends MainLoginStates{
   ErrorLoginStates(this.error);
 }
 class SuccessLoginStates extends MainLoginStates{
-  //final RegisterUserModel? registerUserModel;
   final String? uID;
    SuccessLoginStates(this.uID,);
 

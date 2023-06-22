@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:remindme/Shared/Split/Constants/Constants.dart';
 import 'package:remindme/Shared/Styles/Icons.dart';
 
@@ -36,9 +37,15 @@ class _State extends State<RegisterScreen> {
           listener: (context , state){
             if (state is RegisterAuthSuccessState){
               pushAndFinish(context,  const LoginScreen());
-
+              Fluttertoast.showToast(
+                  msg: "Register done, LogIn Now ", backgroundColor: Colors.green);
 
             }
+            if(state is ErrorRegisterStates ){
+              Fluttertoast.showToast(msg:"E-mail is registered previously or pass is less than 6 char ",backgroundColor: Colors.amber);
+
+            }
+
           },
 
           builder:(context,stat){
