@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:remindme/Module/RegisterPage/cubit/RegisterCubit.dart';
 import 'package:remindme/Shared/Styles/themes.dart';
-import 'Layout/AppCubit/AppCubit.dart';
-import 'Layout/Test Result/Test Result.dart';
-import 'Module/Home/HomeLayout/ActivityScreen/Memories/cubit/memoriesCubit.dart';
-import 'Module/Home/HomeLayout/ActivityScreen/bottomSheet/bottomSheet.dart';
-import 'Module/Home/HomeLayout/HomeScreen/Home.dart';
 import 'Module/Home/HomeLayout/TasksScreen/TaskComponents/constants.dart';
 import 'Module/Home/HomeLayout/TasksScreen/TasksCubit/notes cubit.dart';
 import 'Module/Home/HomeLayout/TasksScreen/TasksModel/note_model.dart';
@@ -34,7 +27,7 @@ void main() async {
   await CacheHelper.initShared();
   onBoarding = CacheHelper.getData("onBoarding");
   id = CacheHelper.getData("id");
- bool ? isDark = CacheHelper.getData("isDark");
+  bool ? isDark = CacheHelper.getData("isDark");
   if (onBoarding !=null){
     if (id != null  ){ widget = const NavigationBarScreen();}
     else{ widget =  const LoginScreen();}
@@ -63,9 +56,6 @@ class RemindMe extends StatelessWidget {
     return   MultiBlocProvider(providers: [
       BlocProvider(create: (context)=> NavCubit()..mode(isFromShared: isDark)),
       BlocProvider(create: (context) => NotesCubit()),
-      //BlocProvider(create: (context) => RegisterCubit()),
-      //BlocProvider(create: (context) => AppCubit()..getUserData(),),
-      //BlocProvider(create: (context) => MemoryCubit()..getMemories(),),
 
     ],
         child: BlocConsumer <NavCubit,NavMainStates>
@@ -79,15 +69,9 @@ class RemindMe extends StatelessWidget {
     // lightTheme,
     themeMode: NavCubit.get(context).selectMode ? ThemeMode.light:ThemeMode.dark,
     home :
-    //(onBoarding != null && id != null)  ? const NavigationBarScreen() : const LoginScreen()
 
-      //const LoginScreen (),
-
-    // NavigationBarScreen()
-    //Boarding(),
       startWidget  ,
 
-//      onBoarding == null ? const Boarding() : const LoginScreen (),
     ) ;} )
     );
     }
