@@ -1,2 +1,2 @@
 # RemindMe
-AlZeheimer App
+helping AlZheimer patients -RemindMe App
