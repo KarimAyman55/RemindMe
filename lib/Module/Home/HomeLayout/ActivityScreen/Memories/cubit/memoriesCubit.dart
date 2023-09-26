@@ -16,7 +16,7 @@ class MemoryCubit extends Cubit<MainMemoryStates> {
   MemoriesModel? memoriesModel;
   dynamic  memoryPic  ;
   final picker = ImagePicker();
-  //String ? picUrl;
+  String ? picUrl;
 
   Future<void> getImg () async{
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -28,25 +28,23 @@ class MemoryCubit extends Cubit<MainMemoryStates> {
     else {
       print("img not founded");
       emit(GalleryErrorState());
-
     }
 
   }
 
-  void uploadMemory(
+  void uploadMemory({
       String ? title,
+      String ? date,}
       ) async{
     emit(LoadingMemoryUploadState());
     FirebaseStorage.instance.ref().child("Memories/${Uri.file(memoryPic.path).pathSegments.last}")
         .putFile(memoryPic).then((v)
-
     {
-
       v.ref.getDownloadURL().then((value) {
-        //emit(MemoryUploadSuccessState());
-        //picUrl =value;
+        picUrl =value;
         createMemories(
             title:title ,
+            date:date ,
             memoryPic: value
         );
 
@@ -59,10 +57,13 @@ class MemoryCubit extends Cubit<MainMemoryStates> {
   void createMemories({
     String ? memoryPic,
     String ? title,
+    String ? date,
   }) {
    emit(LoadMemoryStates());
     MemoriesModel model = MemoriesModel(
       title: title,
+      date: date,
+
       memoryPic: memoryPic??"",
       uID: id,
     );
@@ -80,31 +81,36 @@ class MemoryCubit extends Cubit<MainMemoryStates> {
 
 
   List <MemoriesModel> memories =[];
+  List <String> memoryId=[];
 
   void getMemories (){
 
     emit(LoadGetMemoryStates());
-    FirebaseFirestore.instance.collection("Memories").snapshots().listen((event) {
-memories =[];
-      event.docs.forEach((element) {
-        memories.add(MemoriesModel.fromJson(element.data()) );
-        emit(SuccessGetMemoryStates());
+    FirebaseFirestore.instance.collection("Memories").orderBy("dateTime").snapshots().listen((event) {
 
+      memories =[];
+      event.docs.forEach((element) {
+        if (element.data()['uid'] == id) {
+          memories.add(MemoriesModel.fromJson(element.data()));
+           memoryId.add(element.id);
+        }
+        emit(SuccessGetMemoryStates());
       });
+
 
     });
 
   }
-void removePic(pic){
-
-  FirebaseFirestore.instance.collection("Memories").snapshots().listen((event) {
-    event.docs.forEach((element) {
-      memories.remove(pic);
-      emit(RemoveMemorPicyStates());
-
+  void removePost(String postId)  {
+    FirebaseFirestore.instance
+        .collection('Memories')
+        .doc(postId)
+        .delete()
+        .then((value) {
+      emit(RemoveSuccessMemoryPicStates());
     });
-});
 
-   }
+  }
+
 
 }

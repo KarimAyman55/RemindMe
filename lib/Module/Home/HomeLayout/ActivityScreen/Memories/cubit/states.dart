@@ -23,4 +23,5 @@ class ErrorGetMemoryStates extends MainMemoryStates{
   String error;
   ErrorGetMemoryStates(this.error);
 }
-class RemoveMemorPicyStates extends MainMemoryStates{}
+class RemoveSuccessMemoryPicStates extends MainMemoryStates{}
+class RemoveLoadMemoryPicStates extends MainMemoryStates{}

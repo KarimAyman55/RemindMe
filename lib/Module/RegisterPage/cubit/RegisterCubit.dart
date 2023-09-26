@@ -83,13 +83,13 @@ class RegisterCubit extends Cubit<MainRegisterStates>{
     users =[];
     emit(LoadGetUsersStates());
 
-    FirebaseFirestore.instance.collection("userRegister").get().then((value) => {
+    FirebaseFirestore.instance.collection("userRegister").get().then((value)  {
       value.docs.forEach((element) {
     if (element.data()['uid'] != id) {
       users.add(RegisterUserModel.fromJson((element.data())));
     }
       emit(SuccessGetUsersStates());
-      })
+      });
     });
 
 
@@ -144,6 +144,24 @@ class RegisterCubit extends Cubit<MainRegisterStates>{
       emit(SuccessGetMessageStates());
 
     });
+
+  }
+  List<RegisterUserModel> searchList =[];
+  void search(String name  ){
+    FirebaseFirestore.instance.collection("userRegister")
+        .where("name",isGreaterThanOrEqualTo: name).get().then((value) {
+      value.docs.forEach((element){
+        if (element.data()['uid'] != id) {
+          searchList = [];
+          searchList.add(RegisterUserModel.fromJson(element.data()));
+          emit(SuccessSearchStates());
+
+        }
+      });
+    }).catchError((e){
+      print(e.toString());
+    });
+
 
   }
 

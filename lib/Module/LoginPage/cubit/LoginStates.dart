@@ -1,4 +1,3 @@
-import '../../../Model/RegisterModel/RegisterModel.dart';
 
 abstract class MainLoginStates{}
 class InitialLoginStates extends MainLoginStates{}

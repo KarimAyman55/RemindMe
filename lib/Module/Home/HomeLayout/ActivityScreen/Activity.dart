@@ -1,8 +1,10 @@
+import 'package:photo_view/photo_view.dart';
+import 'package:intl/intl.dart';
 import 'package:remindme/Model/MemoriesModel/MemoriesModel.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:remindme/Module/Home/HomeLayout/ActivityScreen/games/memoryState/home.dart';
+import 'package:remindme/Module/Home/HomeLayout/ActivityScreen/games/SelectFlips/home.dart';
 import '../../../../Shared/Split/Components.dart';
 import '../../../../Shared/Styles/Icons.dart';
 import 'Memories/cubit/memoriesCubit.dart';
@@ -19,8 +21,7 @@ class Activity extends StatefulWidget {
   State<Activity> createState() => _ActivityState();
 }
 class _ActivityState extends State<Activity> {
-   List<String> itemList = ['CrossWord','Select word', 'Select image'];
- bool val=false;
+  bool val=false;
  bool val1=false;
  bool val2=false;
  bool val3=false;
@@ -43,7 +44,6 @@ class _ActivityState extends State<Activity> {
 
             },
             builder: (context , state){
-              var model = MemoryCubit.get(context).memoriesModel;
               var cubit = MemoryCubit.get(context);
               return Scaffold(
                 key: scaffoldKey,
@@ -78,7 +78,7 @@ class _ActivityState extends State<Activity> {
                             child: Column(
                               children: [
                                 const  Text(
-                                    "# Through Test you can Know That You have Alzheimer or just Weakly memory.  \n do 'right' mark on different boxes to answer...",
+                                    "# Through Test you can follow your standard ,                  do it each period.  \n do 'right' mark on different boxes to answer...",
                                     style: TextStyle(color:Colors.indigo),maxLines: 3,overflow: TextOverflow.ellipsis),
                                 const SizedBox(height: 4,),
 
@@ -405,8 +405,13 @@ class _ActivityState extends State<Activity> {
                                 width: 300,
                                 child: OutlinedButton(
                                   onPressed: (){
+                                    var currentDate = DateTime.now();
 
-                                       cubit.uploadMemory( title.text);
+                                       cubit.uploadMemory(title: title.text,date:
+                                       DateFormat("yyy-MM-dd KK:mm a")
+                                           .format(currentDate)
+                                           .toString()
+                                    );
 
                                        if (cubit.memoryPic == null )
                                        {
@@ -415,6 +420,7 @@ class _ActivityState extends State<Activity> {
                                          Fluttertoast.showToast(msg: " Done , check feeds ",backgroundColor: Colors.orangeAccent);
 
                                        }
+                                       title.clear();
 
                                   },
                                   child: const Text ('Create Your Memories'),
@@ -433,9 +439,9 @@ class _ActivityState extends State<Activity> {
                             ),
                             const SizedBox(height: 20,),
 
-                            cubit.memoriesModel !=null || state is LoadingMemoryUploadState ?const Center(child: CircularProgressIndicator())
+                             cubit.memoriesModel!=null ?const Center(child: CircularProgressIndicator())
                                 : ListView.separated(
-                                itemBuilder: (context ,index) => memoryItem(cubit.memories[index],context)
+                                itemBuilder: (context ,index) => memoryItem(cubit.memories[index],context,index)
                                 ,itemCount: cubit.memories.length,
                               separatorBuilder: (context, index) => const SizedBox(
                                 height: 13,
@@ -532,7 +538,7 @@ class SpalshScreen extends StatelessWidget {
       duration: 3000,
       navigateRoute: UserAsk(),
       text: 'Waiting',
-      textStyle: const TextStyle(
+      textStyle:  const TextStyle(
         fontSize: 35,
         fontFamily: 'janna',
       ),
@@ -541,42 +547,65 @@ class SpalshScreen extends StatelessWidget {
 }
 
 
-// List memories = [
-//   const Image(image: AssetImage("assets/images/Logo.png")),
-//   const Image(image: AssetImage("assets/images/Logo.png")),
-//
-// ];
-Widget memoryItem (MemoriesModel model , context)=> BlocConsumer<MemoryCubit,MainMemoryStates>(
+
+Widget memoryItem (MemoriesModel model , context,index)=> BlocConsumer<MemoryCubit,MainMemoryStates>(
   listener: (context , state){},
   builder: (context , state){
     var cubit = MemoryCubit.get(context);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          if (model.memoryPic != "" )
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(22)),
-              child: Card(
-                elevation: 10,
-                child: Stack(
-                   alignment: AlignmentDirectional.topEnd
-                  ,children: [
-                  Image(image: NetworkImage(model.memoryPic),
-                    fit: BoxFit.cover,width: MediaQuery.of(context).size.width),
-                  IconButton(onPressed: (){
-                   cubit.removePic(model.memoryPic);
-                  }, icon: const Icon (Icons.delete,size: 30,color: Colors.green,))
-                ],
+          if (  cubit.memoryPic != "")
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(22)),
+                child: Card(
+                  elevation: 10,
+                  child: Stack(
+                    alignment: AlignmentDirectional.topEnd
+                    ,children: [
+
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: PhotoView(
+                        imageProvider: NetworkImage(model.memoryPic),
+                        ),
                     ),
+                    PopupMenuButton(
+                        color: Colors.indigo,
+                        itemBuilder:(context)=> [
+                          PopupMenuItem(
+                            value: 1,
+                            onTap: () {
+                              cubit.removePost(cubit.memoryId[index]);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(' Deleted')));
+                            },
+                            child: const Row(
+                              children: [
+                                Text('Delete',style: TextStyle(color: Colors.black,fontStyle: FontStyle.italic)),
+                                Spacer(),
+                                Icon(IconBroken.delete)
+                              ],
+                            ),
+                          ),]),
+
+                  ],
+                  ),
+                ),
               ),
             ),
-          ),
           const SizedBox(height: 10,),
-         if (model.memoryPic != "" )
-          Text("${model.title}",style: Theme.of(context).textTheme.titleMedium,),
+          if ( cubit.memoryPic != "" )
+            Text("${model.title}",style: Theme.of(context).textTheme.titleMedium,),
+          const SizedBox(height: 4,),
+          if (model.memoryPic != "")
+          Text("${model.date}",style: Theme.of(context).textTheme.bodySmall,),
+
         ],
       ),
     );

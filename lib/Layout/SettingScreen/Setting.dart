@@ -42,6 +42,8 @@ class Setting extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      physics: const BouncingScrollPhysics(),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -70,7 +72,12 @@ class Setting extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
+                                Container(
+                                  height: 1,
+                                  color: Colors.black38,
+                                ),
 
+                                const SizedBox(height: 20),
                                 Container(
 
                                   decoration:  const BoxDecoration(
@@ -194,13 +201,68 @@ class Setting extends StatelessWidget {
                                 ElevatedButton(
                                   onPressed: (){
 
-                                      CacheHelper.removeData("id").then((value) {
-                                      if(value == true ) {
-                                        pushAndFinish(
-                                            context, const LoginScreen());
-                                      }
-                                    });
-                                   },
+                                    showDialog(context: context, builder: (context)=>
+                                        AlertDialog(
+                                          backgroundColor: Colors.black87,
+                                          title: const Text(" Are you sure for LogOut..?",
+                                              style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white70,
+                                                  fontSize: 15)),
+                                          actions: [
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child:
+                                                      InkWell(
+                                                        onTap: (){
+                                                          CacheHelper.removeData("id").then((value) {
+                                                            if(value == true ) {
+                                                              pushAndFinish(
+                                                                  context, const LoginScreen());
+                                                            }
+                                                          });
+                                                        },
+                                                        child:  Container(
+                                                          width: 40,
+                                                          color: Colors.white70,
+                                                          child: const Text( " ya "
+                                                            ,style: TextStyle(fontStyle:
+                                                            FontStyle.italic,color: Colors.black
+                                                                ,fontSize: 14),),
+                                                        ),
+                                                      ),
+
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child:
+                                                      InkWell(
+                                                        onTap: (){
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child:  Container(
+                                                          width: 40,
+                                                          color: Colors.white70,
+
+                                                          child: const Text( " no "
+                                                            ,style: TextStyle(fontStyle:
+                                                            FontStyle.italic,color: Colors.black
+                                                                ,fontSize: 14),),
+                                                        ),
+                                                      ),
+
+                                                    ),
+
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ));
+
+                                  },
                                   child: const Text ("Logout")),
                             ),
                           ),

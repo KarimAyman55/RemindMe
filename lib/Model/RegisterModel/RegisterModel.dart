@@ -1,34 +1,3 @@
-//
-//
-//
-//
-// class RegisterModel {
-//
-//   String? $id;
-//   String ?firstName;
-//   String ?status;
-//   String ?lastName;
-//   String ?email;
-//   String ?address;
-//   String ?password;
-//   String ? confirmPassword;
-//   String ?phone;
-//   String ?token;
-//
-// RegisterModel.fromJson(Map <String,dynamic> model){
-//     $id = model[''];
-//     status = model["status"];
-//     firstName = model["firstName"];
-//     lastName = model["lastName"];
-//     email = model["email"];
-//     address = model["address"];
-//     password = model["Password"];
-//     confirmPassword = model["confirmPassword"];
-//     phone = model["phone"];
-//     token = model["id"] ;
-//   }
-//
-// }
 
 class RegisterUserModel {
   String ? name;
@@ -54,7 +23,6 @@ class RegisterUserModel {
     bio = json ['bio'];
     email = json ['email'];
     uID = json ['uid'];
-    password = json ['password'];
     phone = json ['phone'];
     img = json ['image'];
     emailVerified = json ['isEmailVerified'];
@@ -64,7 +32,6 @@ class RegisterUserModel {
     return {
       'name' : name,
       'email' : email,
-      'password' : password,
       'uid' : uID,
       'phone' : phone,
       'image' : img,

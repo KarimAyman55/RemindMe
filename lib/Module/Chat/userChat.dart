@@ -6,7 +6,6 @@ import 'package:remindme/Module/RegisterPage/cubit/RegisterCubit.dart';
 import 'package:remindme/Module/RegisterPage/cubit/RegisterStates.dart';
 import 'package:remindme/Shared/Split/Constants/Constants.dart';
 import 'package:remindme/Shared/Styles/Icons.dart';
-
 import '../../Model/RegisterModel/RegisterModel.dart';
 
 class UserChat extends StatefulWidget {
@@ -123,8 +122,10 @@ class _UserChatState extends State<UserChat> {
                             onPressed: () {
                               var currentDate = DateTime.now();
                               RegisterCubit.get(context).sendMessage(rId:widget.model!.uID,
-                                  date:DateFormat.Hms().format(currentDate).toString()
-                                  , text:text.text);
+                                  date:DateFormat("yyy-MM-dd KK:mm a")
+                                      .format(currentDate)
+                                      .toString(),
+                                   text:text.text);
                               setState(() {
                                 text.clear();
                               });

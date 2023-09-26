@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../Shared/Network/Remote/SharedPre/Shared_Pre.dart';
 import '../../Shared/Split/Components.dart';
 import '../LoginPage/LoginScreen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class BoardingModel {
   String image;
@@ -45,26 +47,37 @@ class _BoardingState extends State<Boarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: HexColor("281e33"),
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 1,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           title:
-          const  Padding(
-            padding: EdgeInsets.only(right: 60),
-            child:  Text
-              (' Welcome      \t   Remind Me ',
-              style:  TextStyle(
-                 fontFamily :"janna",
-                fontSize: 18,
-                color: Colors.orange
-              ),),
+            Padding(
+            padding: const EdgeInsets.only(right: 60),
+            child:  AnimatedTextKit(
+              animatedTexts: [
+                TyperAnimatedText(
+                  ' Remind Me ',
+                  textStyle: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic
+                  ),
+                  speed: const Duration(milliseconds: 300),
+                ),
+
+              ],
+              isRepeatingAnimation: true,
+              repeatForever: true,
+            ),
+
           ),
           centerTitle: true,
           actions: [Padding(
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
-              backgroundColor: Colors.lightGreen.shade300,
+              backgroundColor: Colors.indigo,
               radius: 23,
               child: TextButton (
                 onPressed: (){
@@ -122,7 +135,7 @@ class _BoardingState extends State<Boarding> {
         ),
         //const  SizedBox(height: 30,),
         Text(model.text,maxLines: 2,style: const TextStyle(
-          color: Colors.black,fontSize: 15,fontFamily: "Janna"
+          color: Colors.white54,fontSize: 15,fontFamily: "Janna"
         )),
         Row(
           children: [

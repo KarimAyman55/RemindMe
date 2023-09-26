@@ -30,5 +30,6 @@ class ErrorMessageStates extends MainRegisterStates{
    ErrorMessageStates(this.error);
 }
 class SuccessGetMessageStates extends MainRegisterStates{}
-class LoadGetMessageStates extends MainRegisterStates{
-   }
+class LoadGetMessageStates extends MainRegisterStates{}
+
+class SuccessSearchStates extends MainRegisterStates{}

@@ -24,7 +24,7 @@ async{
   if (value is int) return await sharedPre.setInt(key, value);
   return null;
 }
-static Future <bool> removeData (String key) async{
-  return await sharedPre.remove(key);
+static Future<bool> removeData (String key) async{
+  return await sharedPre.clear();
 }
 }

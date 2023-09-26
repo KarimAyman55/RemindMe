@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Layout/Training/training.dart';
 import '../../../Shared/Split/Components.dart';
 import '../../../Shared/Styles/Icons.dart';
 import 'NavCubit/NavCubit.dart';
@@ -21,9 +22,25 @@ class NavigationBarScreen extends StatelessWidget {
               "RemindMe",style: TextStyle(fontFamily: "Janna"),
             ),
             actions: [
+              InkWell(
+                onTap: (){
+                  pushTo(context, const Training());
 
-              IconButton(onPressed: (){}, icon: const Icon(IconBroken.notification,color: Colors.red,)),
-            ],
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    children: [
+                      Text("Exercises",style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontSize: 13,color:Colors.green ),),
+                       const SizedBox(width: 6,),
+                       const Icon(IconBroken.arrowRightCircle,color: Colors.green,)
+
+                    ],
+                  ),
+                ),
+              ),
+              ],
 
           )
           ,body: NavCubit.get(context).screens[NavCubit.get(context).val],

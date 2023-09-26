@@ -123,7 +123,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Text(
-          turnOfO ? 'Turn Of O' : 'Turn of X',
+          turnOfO ? 'Turn of O' : 'Turn of X',
           style: const TextStyle(
             color: Colors.white,
             fontFamily: 'janna',
@@ -158,7 +158,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
               child: Column(
                 children: [
                   Text(
-                    'Your : $playersChoice',
+                    'You : $playersChoice',
                     style: const TextStyle(
                       fontSize: 20.0,
                       color: Colors.white,
