@@ -39,6 +39,9 @@ dependencies:
   image_picker: ^0.8.7+5
   firebase_storage: ^11.2.1
   splash_screen_view : ^2.0.0
+  animated_text_kit: any
+  photo_view: any
+
 
 
 
@@ -68,7 +71,8 @@ flutter_icons:
 flutter:
 
   assets :
-    - assets/images/
+    - assets/images/Logo.png
+    - assets/images/whatsapp.png
 
   fonts:
     - family: Janna
