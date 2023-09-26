@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:413526535485:android:49bede267704f09fd4e954",
         "android_client_info": {
-          "package_name": "com.example.remindme"
+          "package_name": "com.teckari.remindme"
         }
       },
       "oauth_client": [
@@ -55,7 +55,7 @@
           "client_id": "413526535485-8h7ioktga8j4ebhiv1kchbve8lrt8q3k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.remindme",
+            "package_name": "com.teckari.remindme",
             "certificate_hash": "5c9b2956423caf3b4bb57d0687e428e53a158fd1"
           }
         },

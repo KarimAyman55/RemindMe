@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.remindme">
+    package="com.teckari.remindme">
 
    <application
         android:label="RemindMe"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
-            android:name="com.example.remind_me.MainActivity"
+            android:name="com.teckari.remind_me.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
